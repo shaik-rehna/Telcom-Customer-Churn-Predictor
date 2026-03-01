@@ -34,7 +34,6 @@ class ModelTrainer:
             models = {
                 "Logistic Regression": LogisticRegression(class_weight="balanced", max_iter=1000),
                 "Random Forest": RandomForestClassifier(n_estimators=200),
-                "XGBoost": XGBClassifier(eval_metric="logloss")
             }
             param = {
                 "Random Forest": {
