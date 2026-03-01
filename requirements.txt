@@ -3,4 +3,7 @@ pandas
 seaborn
 scikit-learn
 xgboost
+fastapi
+uvicorn
+jinja2
 -e .
