@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Churn Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            width: 600px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2a5298;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #1e3c72;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .low { background: #d4edda; color: #155724; }
+        .medium { background: #fff3cd; color: #856404; }
+        .high { background: #f8d7da; color: #721c24; }
+
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Telecom Customer Churn Predictor</h2>
+
+    <form action="/predict" method="post">
+
+        <label>Gender</label>
+        <select name="gender">
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+
+        <label>Senior Citizen</label>
+        <select name="SeniorCitizen">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+
+        <!-- <label>Tenure (Months with Company)</label>
+        <input type="number" name="tenure" required> -->
+
+        <!-- TENURE -->
+        <div class="slider-header">
+            <label>Tenure (Months with Company)</label>
+            <span><span id="tenureValue">12</span> months</span>
+        </div>
+
+        <input type="range"
+            name="tenure"
+            min="0"
+            max="72"
+            step="1"
+            value="12"
+            oninput="document.getElementById('tenureValue').innerText = this.value">
+
+
+        <!-- MONTHLY BILL -->
+        <div class="slider-header">
+            <label>Current Monthly Bill</label>
+            <span>$<span id="billValue">70</span></span>
+        </div>
+
+        <input type="range"
+            name="MonthlyCharges"
+            min="18"
+            max="150"
+            step="1"
+            value="70"
+            oninput="document.getElementById('billValue').innerText = this.value">
+
+        <label>Contract Type</label>
+        <select name="Contract">
+            <option>Month-to-month</option>
+            <option>One year</option>
+            <option>Two year</option>
+        </select>
+
+        <label>Internet Service</label>
+        <select name="InternetService">
+            <option>DSL</option>
+            <option>Fiber optic</option>
+            <option>No</option>
+        </select>
+
+        <label>Payment Method</label>
+        <select name="PaymentMethod">
+            <option>Electronic check</option>
+            <option>Mailed check</option>
+            <option>Bank transfer (automatic)</option>
+            <option>Credit card (automatic)</option>
+        </select>
+
+        <!-- Hidden defaults -->
+        <input type="hidden" name="Partner" value="Yes">
+        <input type="hidden" name="Dependents" value="No">
+        <input type="hidden" name="PhoneService" value="Yes">
+        <input type="hidden" name="MultipleLines" value="No">
+        <input type="hidden" name="OnlineSecurity" value="No">
+        <input type="hidden" name="OnlineBackup" value="No">
+        <input type="hidden" name="DeviceProtection" value="No">
+        <input type="hidden" name="TechSupport" value="No">
+        <input type="hidden" name="StreamingTV" value="No">
+        <input type="hidden" name="StreamingMovies" value="No">
+        <input type="hidden" name="PaperlessBilling" value="Yes">
+
+        <button type="submit">Analyze Risk</button>
+    </form>
+
+    {% if prediction %}
+        {% if prediction == "Low Risk" %}
+            <div class="result low">
+        {% elif prediction == "Medium Risk" %}
+            <div class="result medium">
+        {% else %}
+            <div class="result high">
+        {% endif %}
+
+            Risk Level: {{ prediction }} <br>
+            Churn Probability: {{ probability }}%
+        </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
