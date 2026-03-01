@@ -55,7 +55,6 @@ class ModelTrainer:
             best_model_score = max(model_report.values())
 
             ## To get best model name from dict
-
             best_model_name = list(model_report.keys())[
                 list(model_report.values()).index(best_model_score)
             ]
@@ -67,10 +66,7 @@ class ModelTrainer:
 
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,
-                obj=best_model
-            )
-
-            predicted=best_model.predict(X_test)
+                obj=best_model)
 
             y_prob = best_model.predict_proba(X_test)[:,1]
             roc_auc = roc_auc_score(y_test, y_prob)
